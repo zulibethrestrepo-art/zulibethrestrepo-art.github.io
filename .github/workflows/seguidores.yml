@@ -1,0 +1,38 @@
+# Robot que actualiza seguidores.json todos los días.
+# Se puede lanzar a mano desde GitHub: pestaña "Actions" → "Actualizar seguidores" → "Run workflow".
+name: Actualizar seguidores
+
+on:
+  schedule:
+    - cron: "0 10 * * *"   # todos los días a las 10:00 UTC = 5:00 a. m. en Colombia
+  workflow_dispatch:        # botón para correrlo cuando quieras
+
+permissions:
+  contents: write           # necesario para guardar seguidores.json en el repositorio
+
+jobs:
+  actualizar:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Descargar el repositorio
+        uses: actions/checkout@v4
+
+      - name: Preparar Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Leer seguidores de TikTok e Instagram
+        run: node tools/seguidores.js
+
+      - name: Guardar el cambio
+        run: |
+          if git diff --quiet -- seguidores.json; then
+            echo "Sin cambios que guardar."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add seguidores.json
+          git commit -m "Seguidores: actualización automática"
+          git push

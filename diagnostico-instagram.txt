@@ -1,0 +1,65 @@
+Diagnóstico Instagram desde GitHub Actions — 2026-09-19T03:06:12.822Z
+IP pública del runner: 20.29.31.113
+
+## IG html facebookexternalhit
+HTTP 200 · 639591 bytes · url final: https://www.instagram.com/accounts/login/
+og:description: (no viene)
+title: Login • Instagram
+followers en JSON: (no viene)
+inicio: <!DOCTYPE html><html class="_9dls _ar44" lang="en" dir="ltr"><head><link data-default-icon="https://static.cdninstagram.com/rsrc.php/yr/r/rzWiSjZRxk5.webp" rel=
+
+## IG html WhatsApp
+HTTP 200 · 645853 bytes · url final: https://www.instagram.com/accounts/login/?next=https%3A%2F%2Fwww.instagram.com%2Fzulibethrestrepo14%2F&is_from_rle
+og:description: (no viene)
+title: Login • Instagram
+followers en JSON: (no viene)
+inicio: <!DOCTYPE html><html class="_9dls _ar44" lang="en" dir="ltr"><head><link data-default-icon="https://static.cdninstagram.com/rsrc.php/yr/r/rzWiSjZRxk5.webp" rel=
+
+## IG html Twitterbot
+HTTP 200 · 639793 bytes · url final: https://www.instagram.com/accounts/login/
+og:description: (no viene)
+title: Login • Instagram
+followers en JSON: (no viene)
+inicio: <!DOCTYPE html><html class="_9dls _ar44" lang="en" dir="ltr"><head><link data-default-icon="https://static.cdninstagram.com/rsrc.php/yr/r/rzWiSjZRxk5.webp" rel=
+
+## IG html Googlebot
+HTTP 200 · 639737 bytes · url final: https://www.instagram.com/accounts/login/
+og:description: (no viene)
+title: Login • Instagram
+followers en JSON: (no viene)
+inicio: <!DOCTYPE html><html class="_9dls _ar44" lang="en" dir="ltr"><head><link data-default-icon="https://static.cdninstagram.com/rsrc.php/yr/r/rzWiSjZRxk5.webp" rel=
+
+## IG html Chrome
+HTTP 200 · 633571 bytes · url final: https://www.instagram.com/accounts/login/?next=https%3A%2F%2Fwww.instagram.com%2Fzulibethrestrepo14%2F&is_from_rle
+og:description: (no viene)
+title: Instagram
+followers en JSON: (no viene)
+inicio: <!DOCTYPE html><html class="_9dls _ar44" lang="es-la" dir="ltr"><head><link data-default-icon="https://static.cdninstagram.com/rsrc.php/yr/r/rzWiSjZRxk5.webp" r
+
+## IG api web_profile_info www
+HTTP 429 · 0 bytes · url final: https://www.instagram.com/api/v1/users/web_profile_info/?username=zulibethrestrepo14
+og:description: (no viene)
+title: (no viene)
+followers en JSON: (no viene)
+inicio: 
+
+## IG api web_profile_info i.
+HTTP 429 · 0 bytes · url final: https://i.instagram.com/api/v1/users/web_profile_info/?username=zulibethrestrepo14
+og:description: (no viene)
+title: (no viene)
+followers en JSON: (no viene)
+inicio: 
+
+## IG html ?__a=1&__d=dis
+HTTP 400 · 26 bytes · url final: https://www.instagram.com/zulibethrestrepo14/?__a=1&__d=dis
+og:description: (no viene)
+title: (no viene)
+followers en JSON: (no viene)
+inicio: SecFetch Policy violation.
+
+## TikTok control facebookexternalhit
+HTTP 200 · 6109 bytes · url final: https://www.tiktok.com/@zulibethrestrepougc
+og:description: @zulibethrestrepougc 1503 Followers, 546 Following, 20.6k Likes - Watch awesome short videos created by Zulibeth Restrepo - UGC
+title: Zulibeth Restrepo - UGC on TikTok
+followers en JSON: (no viene)
+inicio: <!DOCTYPE html><head><link rel="shortcut icon" href="https://lf16-tiktok-common.ibytedtos.com/obj/tiktok-web-common-sg/mtact/static/images/tiktok-logo/logo.png"

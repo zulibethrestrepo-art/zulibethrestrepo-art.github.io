@@ -8,6 +8,13 @@
 // alcance ni audiencia: esas cifras son privadas de cada cuenta.
 //
 // Se ejecuta solo todos los días desde GitHub (ver .github/workflows/seguidores.yml).
+// OJO: desde los servidores de GitHub Instagram responde con la pantalla de
+// inicio de sesión (bloquea esas direcciones IP), así que allá solo se
+// actualiza TikTok. Instagram se actualiza cuando el script corre desde un
+// computador de casa: tools/actualizar-desde-pc.cmd (tarea programada de Windows).
+// Cada red guarda su propia fecha (tiktok_actualizado, instagram_actualizado)
+// para que se note cuál está al día y cuál no.
+//
 // También se puede correr a mano:  node tools/seguidores.js
 
 const fs = require('fs');
@@ -106,12 +113,20 @@ function leerJson(archivo, porDefecto) {
 }
 
 function guardarHistorial(nuevo) {
-  const hoy = nuevo.actualizado.slice(0, 10); // AAAA-MM-DD
-  const entrada = { fecha: hoy, tiktok: nuevo.tiktok, instagram: nuevo.instagram };
+  // Fecha de hoy en hora de Colombia (AAAA-MM-DD), no en la del servidor.
+  const hoy = new Date().toLocaleDateString('en-CA', { timeZone: 'America/Bogota' });
+  // Solo se anota lo leído hoy: un valor viejo no cuenta como dato del día.
+  const entrada = { fecha: hoy };
+  for (const red of Object.keys(REDES)) {
+    const fechaRed = nuevo[red + '_actualizado'];
+    if (fechaRed && new Date(fechaRed).toLocaleDateString('en-CA', { timeZone: 'America/Bogota' }) === hoy) entrada[red] = nuevo[red];
+  }
   let lista = leerJson(HISTORIAL, []);
   if (!Array.isArray(lista)) lista = [];
-  lista = lista.filter((e) => e && e.fecha !== hoy); // una sola entrada por día
-  lista.push(entrada);
+  // Una sola entrada por día: si ya había una, se completa con lo leído ahora.
+  const previa = lista.find((e) => e && e.fecha === hoy) || {};
+  lista = lista.filter((e) => e && e.fecha !== hoy);
+  lista.push({ ...previa, ...entrada });
   lista.sort((a, b) => (a.fecha < b.fecha ? -1 : 1));
   if (lista.length > DIAS_HISTORIAL) lista = lista.slice(lista.length - DIAS_HISTORIAL);
   fs.writeFileSync(HISTORIAL, JSON.stringify(lista) + '\n');
@@ -130,6 +145,7 @@ async function principal() {
       continue;
     }
     nuevo[red] = datos.seguidores;
+    nuevo[red + '_actualizado'] = new Date().toISOString();
     if (datos.siguiendo !== null) nuevo[red + '_siguiendo'] = datos.siguiendo;
     if (datos.likes != null) nuevo[red + '_likes'] = datos.likes;
     if (datos.publicaciones != null) nuevo[red + '_publicaciones'] = datos.publicaciones;
@@ -141,6 +157,7 @@ async function principal() {
     process.exit(1);
   }
 
+  // Fecha general = la lectura más reciente de cualquiera de las redes.
   nuevo.actualizado = new Date().toISOString();
 
   const sinCambios = Object.keys(REDES).every((red) => anterior[red] === nuevo[red]);
@@ -151,7 +168,7 @@ async function principal() {
   fs.writeFileSync(ARCHIVO, JSON.stringify(nuevo, null, 2) + '\n');
   console.log('Guardado en seguidores.json →', JSON.stringify(nuevo));
 
-  if (typeof nuevo.tiktok === 'number' && typeof nuevo.instagram === 'number') guardarHistorial(nuevo);
+  guardarHistorial(nuevo);
 }
 
 principal().catch((e) => { console.error(e); process.exit(1); });

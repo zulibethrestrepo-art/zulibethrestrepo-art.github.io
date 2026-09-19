@@ -4,7 +4,7 @@ name: Actualizar seguidores
 
 on:
   schedule:
-    - cron: "0 10 * * *"   # todos los días a las 10:00 UTC = 5:00 a. m. en Colombia
+    - cron: "23 10 * * *"  # todos los días a las 10:23 UTC = 5:23 a. m. en Colombia (a la hora en punto GitHub se retrasa horas)
   workflow_dispatch:        # botón para correrlo cuando quieras
 
 permissions:

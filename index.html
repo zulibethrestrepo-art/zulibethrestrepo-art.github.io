@@ -471,15 +471,16 @@ const LINKS = [
   if(cifras && window.fetch){
     fetch('seguidores.json', {cache:'no-store'}).then(function(r){ return r.ok ? r.json() : null; }).then(function(d){
       if(!d) return;
-      var fecha = '';
-      if(d.actualizado){
-        try{ fecha = new Date(d.actualizado).toLocaleDateString('es-CO', {day:'numeric', month:'long', year:'numeric'}); }catch(e){}
-      }
+      var fechaDe = function(iso){
+        try{ return new Date(iso).toLocaleDateString('es-CO', {day:'numeric', month:'long', year:'numeric'}); }catch(e){ return ''; }
+      };
       secCifras.querySelectorAll('.cifra').forEach(function(el){
         var red = el.getAttribute('data-red');
         if(typeof d[red] !== 'number') return;
         el.querySelector('.cifra__num').textContent = formatear(d[red]);
         el.setAttribute('aria-label', formatear(d[red]) + ' seguidores en ' + (etiquetas[red] || red));
+        /* cada red trae su propia fecha: así se nota si alguna quedó atrasada */
+        var fecha = fechaDe(d[red + '_actualizado'] || d.actualizado);
         if(fecha) el.title = 'Actualizado el ' + fecha;
       });
     }).catch(function(){});

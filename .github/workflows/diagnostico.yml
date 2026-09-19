@@ -1,0 +1,25 @@
+# Temporal: diagnóstico de acceso a Instagram desde los servidores de GitHub.
+name: Diagnóstico Instagram
+on:
+  push:
+    paths:
+      - tools/diagnostico-instagram.js
+      - .github/workflows/diagnostico.yml
+permissions:
+  contents: write
+jobs:
+  diagnostico:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: node tools/diagnostico-instagram.js
+      - run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add diagnostico-instagram.txt
+          git commit -m "Diagnóstico Instagram (temporal)"
+          git pull --rebase
+          git push
